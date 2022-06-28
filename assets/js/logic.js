@@ -24,19 +24,64 @@ formContainer.appendChild(inputTextEl);
 
 var inputForm = document.querySelector("#cityname")
 
+// function to get weather info from location
+var getWeatherdata = function(lat, lon) {
+
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,daily&appid=f36d17786468fcf6dab864e03af92392"
+
+    fetch(apiUrl).then(function(response) {
+    if (response.ok) {
+        response.json().then(function(data) {
+
+          console.log(data)
+
+        });
+      } else {
+        alert('City location not found');
+      }
+    })
+    .catch(function(error) {
+
+      alert("Unable to connect to OpenWeather");
+      
+    });
+}
 
 // function to get location data
 var getLocationData = function(cityName) {
 
-    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=f36d17786468fcf6dab864e03af92392";
-    fetch(apiUrl).then(function(response) {
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=f36d17786468fcf6dab864e03af92392";  fetch(apiUrl)
+   
+    fetch(apiUrl)
+    .then(function(response) {
+      // request was successful
         response.json().then(function(data) {
-          console.log(data);
-        });
 
-      });
+          console.log(data)
 
-}
+          if(data === undefined || data.length == 0) {
+
+            alert("location not found")
+            return false;
+
+          } else {
+
+            var cityLat = data[0].lat;
+            var cityLon = data[0].lon;
+
+            getWeatherdata(cityLat, cityLon);
+          }
+
+        })
+    
+    }).catch (function(error) {
+
+        alert("Unable to connect to OpenWeather");
+        
+    })
+   
+  };
+
 
 // add event listender to submission form
 searchContainer.addEventListener("submit", function(event) {
