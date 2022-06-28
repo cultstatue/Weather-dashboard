@@ -18,13 +18,13 @@ header h1 {
 
 .search-container {
 
-    background-color: red;
+    border: solid 3px;
 
 }
 
 .weather-container {
 
-   background-color: blue;
+    border: solid 3px;
 
 }
 
