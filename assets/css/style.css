@@ -1,0 +1,35 @@
+header {
+
+    padding: 20px 35px;
+    text-align: center;
+
+}
+
+header h1 {
+
+    font-size: 3.0vh;
+    color: red;
+}
+
+.main-container {
+
+    margin-top: 30px;
+}
+
+.search-container {
+
+    background-color: red;
+
+}
+
+.weather-container {
+
+   background-color: blue;
+
+}
+
+footer {
+
+    padding: 15px;
+
+}
