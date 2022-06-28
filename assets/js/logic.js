@@ -1,4 +1,4 @@
-// capturing hard-codes elements
+// capturing hard-coded elements
 var mainContainer = document.querySelector("#main-container");
 var searchContainer = document.querySelector("#search-container");
 var weatherContainer = document.querySelector("weather-container");
@@ -37,7 +37,9 @@ var getWeatherdata = function(lat, lon) {
 
         });
       } else {
+
         alert('City location not found');
+
       }
     })
     .catch(function(error) {
@@ -77,7 +79,7 @@ var getLocationData = function(cityName) {
     }).catch (function(error) {
 
         alert("Unable to connect to OpenWeather");
-        
+
     })
    
   };
