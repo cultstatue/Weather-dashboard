@@ -1,7 +1,7 @@
 // capturing hard-coded elements
 var mainContainer = document.querySelector("#main-container");
 var searchContainer = document.querySelector("#search-container");
-var weatherContainer = document.querySelector("weather-container");
+var weatherContainer = document.querySelector("#weather-container");
 
 // creating initial HTML elements for search column
 var searchBox = document.createElement("nav");
@@ -24,11 +24,64 @@ formContainer.appendChild(inputTextEl);
 
 var inputForm = document.querySelector("#cityname")
 
+// function to remove all parents children
+var removeChildren = function (parent) {
+
+    while(parent.firstChild) {
+  
+      parent.removeChild(parent.firstChild);
+  
+    }
+}  
+
 // function to generate weather elements
 var displayWeatherElements = function(currentWeather, futureWeather) {
     
     console.log(currentWeather);
     console.log(futureWeather);
+
+    if(weatherContainer.childNodes.length > 0) {
+
+        removeChildren(weatherContainer);
+    }
+
+    var weatherBoxEl = document.createElement("div");
+    weatherBoxEl.className = "box"
+    weatherContainer.appendChild(weatherBoxEl);
+
+    var cityName = document.createElement("h1");
+    cityName.textContent = currentWeather.name
+    weatherBoxEl.appendChild(cityName);
+
+    var currentTemp = document.createElement("p");
+    currentTemp.innerHTML = "<b>Temperature:</b> " + currentWeather.temp + "° F";
+    weatherBoxEl.appendChild(currentTemp);
+
+    var currentHumidity = document.createElement("p");
+    currentHumidity.innerHTML = "<b>Humidity:</b> " + currentWeather.humidity;
+    weatherBoxEl.appendChild(currentHumidity);
+
+    var currentWind = document.createElement("p");
+    currentWind.innerHTML = "<b>Wind Speed:</b> " + currentWeather.wind;
+    weatherBoxEl.appendChild(currentWind);
+
+    var currentUVI = document.createElement("p")
+
+    if (currentWeather.uv <= 4) {
+
+        currentUVI.innerHTML = "<b>UVI:</b> <span class='tag is-success'>" + currentWeather.uv + "</span>";
+
+    } else if (currentWeather.uv > 4 || currentWeather.uv < 8) {
+
+        currentUVI.innerHTML = "<b>UVI:</b> <span class='tag is-warning'>" + currentWeather.uv + "</span>";
+
+    } else if (currentWeather.uv >= 8) {
+
+        currentUVI.innerHTML = "<b>UVI:</b> <span class='tag is-danger'>" + currentWeather.uv + "</span>";
+    }
+
+    weatherBoxEl.appendChild(currentUVI);
+
 
 }
 
