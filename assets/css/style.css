@@ -8,7 +8,7 @@ header {
 header h1 {
 
     font-size: 3.0vh;
-    color: red;
+    color: blue;
 }
 
 .main-container {
@@ -18,14 +18,25 @@ header h1 {
 
 .search-container {
 
-    border: solid 3px;
+    margin: 10px;
 
 }
 
 .weather-container {
 
-    border: solid 3px;
+    margin: 10px;
 
+}
+
+.block {
+
+    padding: 10px;
+}
+
+.card {
+
+    margin: .2vh;
+    padding: 6px;
 }
 
 footer {

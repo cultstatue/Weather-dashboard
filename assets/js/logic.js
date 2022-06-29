@@ -24,6 +24,18 @@ formContainer.appendChild(inputTextEl);
 
 var inputForm = document.querySelector("#cityname")
 
+// function to convert unix time to a date
+var convertDate = function(unixInput) {
+
+    var milliseconds = unixInput * 1000;
+
+    var dateObject = new Date(milliseconds);
+
+    var parseDateObject = dateObject.toLocaleDateString();
+
+    return parseDateObject;
+}
+
 // function to remove all parents children
 var removeChildren = function (parent) {
 
@@ -34,6 +46,44 @@ var removeChildren = function (parent) {
     }
 }  
 
+// function to create daily forecast cards
+var createForecasts = function(weather, box) {
+
+    console.log(weather);
+
+    var cardColumn = document.createElement("div");
+    cardColumn.classList.add('block', 'columns');
+    weatherContainer.appendChild(cardColumn);
+
+    for (i = 1; i < 6; i++) {
+
+        var newCard = document.createElement("div")
+        newCard.classList.add('card', 'column')
+        cardColumn.appendChild(newCard);
+
+        var newCardContent = document.createElement("div");
+        newCardContent.className = "card-content";
+        newCard.appendChild(newCardContent);
+
+        var newCardTitle = document.createElement("h1");
+        newCardTitle.classList.add('title', 'is-4')
+        newCardTitle.textContent = convertDate(weather[i].dt);
+        newCardContent.appendChild(newCardTitle);
+
+        var newCardWeatherContent = document.createElement("div")
+        newCardWeatherContent.className = "content";
+        newCardWeatherContent.innerHTML = 
+        "<figure class='image is-center image is-64x64'>" + 
+        "<img src='http://openweathermap.org/img/wn/" + weather[i].weather[0].icon + "@2x.png' /></figure>" + 
+        "<br /><b>Temperature:</b> " + weather[i].temp.day + "° F" + 
+        "<br /><b>Wind Speed:</b> " + weather[i].wind_speed + " MPH" +
+        "<br /><b>Humidity:</b> " + weather[i].humidity + " %";
+        
+        newCard.appendChild(newCardWeatherContent);
+    }
+
+}
+
 // function to generate weather elements
 var displayWeatherElements = function(currentWeather, futureWeather) {
     
@@ -43,29 +93,35 @@ var displayWeatherElements = function(currentWeather, futureWeather) {
     if(weatherContainer.childNodes.length > 0) {
 
         removeChildren(weatherContainer);
+
     }
 
-    var weatherBoxEl = document.createElement("div");
-    weatherBoxEl.className = "box"
+    var weatherBoxEl = document.createElement("nav");
+    weatherBoxEl.classList.add('panel', 'is-info', 'weather-box');
     weatherContainer.appendChild(weatherBoxEl);
 
-    var cityName = document.createElement("h1");
-    cityName.textContent = currentWeather.name
+    var cityName = document.createElement("p"); // need to add date here too
+    cityName.innerHTML = "<img src='http://openweathermap.org/img/wn/" + currentWeather.icon + "@2x.png' width='35' height='30'/> " + currentWeather.name + " (" + convertDate(currentWeather.date) + ")";
+    cityName.classList.add('panel-heading')
     weatherBoxEl.appendChild(cityName);
 
-    var currentTemp = document.createElement("p");
+    var currentTemp = document.createElement("div");
+    currentTemp.classList.add('block')
     currentTemp.innerHTML = "<b>Temperature:</b> " + currentWeather.temp + "° F";
     weatherBoxEl.appendChild(currentTemp);
 
-    var currentHumidity = document.createElement("p");
-    currentHumidity.innerHTML = "<b>Humidity:</b> " + currentWeather.humidity;
+    var currentHumidity = document.createElement("div");
+    currentHumidity.classList.add('block')
+    currentHumidity.innerHTML = "<b>Humidity:</b> " + currentWeather.humidity + " %";
     weatherBoxEl.appendChild(currentHumidity);
 
-    var currentWind = document.createElement("p");
-    currentWind.innerHTML = "<b>Wind Speed:</b> " + currentWeather.wind;
+    var currentWind = document.createElement("div");
+    currentWind.classList.add('block')
+    currentWind.innerHTML = "<b>Wind Speed:</b> " + currentWeather.wind + " MPH";
     weatherBoxEl.appendChild(currentWind);
 
-    var currentUVI = document.createElement("p")
+    var currentUVI = document.createElement("div")
+    currentUVI.classList.add('block')
 
     if (currentWeather.uv <= 4) {
 
@@ -82,7 +138,7 @@ var displayWeatherElements = function(currentWeather, futureWeather) {
 
     weatherBoxEl.appendChild(currentUVI);
 
-
+    createForecasts(futureWeather, weatherBoxEl);
 }
 
 // function to get weather info from location
@@ -99,10 +155,12 @@ var getWeatherdata = function(lat, lon, cityName) {
           var currentWeatherObject = {
 
             name: cityName,
+            icon: data.current.weather[0].icon,
             temp: data.current.temp,
             humidity: data.current.humidity,
             wind: data.current.wind_speed,
-            uv: data.current.uvi
+            uv: data.current.uvi,
+            date: data.current.dt
 
           }
 
