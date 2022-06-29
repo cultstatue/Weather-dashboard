@@ -24,16 +24,38 @@ formContainer.appendChild(inputTextEl);
 
 var inputForm = document.querySelector("#cityname")
 
-// function to get weather info from location
-var getWeatherdata = function(lat, lon) {
+// function to generate weather elements
+var displayWeatherElements = function(currentWeather, futureWeather) {
+    
+    console.log(currentWeather);
+    console.log(futureWeather);
 
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,daily&appid=f36d17786468fcf6dab864e03af92392"
+}
+
+// function to get weather info from location
+var getWeatherdata = function(lat, lon, cityName) {
+
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly&units=imperial&appid=f36d17786468fcf6dab864e03af92392"
 
     fetch(apiUrl).then(function(response) {
     if (response.ok) {
         response.json().then(function(data) {
 
           console.log(data)
+
+          var currentWeatherObject = {
+
+            name: cityName,
+            temp: data.current.temp,
+            humidity: data.current.humidity,
+            wind: data.current.wind_speed,
+            uv: data.current.uvi
+
+          }
+
+          var futureWeatherObject = data.daily;
+
+          displayWeatherElements(currentWeatherObject, futureWeatherObject);
 
         });
       } else {
@@ -63,15 +85,16 @@ var getLocationData = function(cityName) {
 
           if(data === undefined || data.length == 0) {
 
-            alert("location not found")
+            alert("City location not found")
             return false;
 
           } else {
 
+            var cityNameState = data[0].name + ", " + data[0].state;
             var cityLat = data[0].lat;
             var cityLon = data[0].lon;
 
-            getWeatherdata(cityLat, cityLon);
+            getWeatherdata(cityLat, cityLon, cityNameState);
           }
 
         })
@@ -97,6 +120,7 @@ searchContainer.addEventListener("submit", function(event) {
 
         getLocationData(cityName);
         inputForm.value = " ";
+        
     } else {
 
         alert("Please enter a valid city name")
