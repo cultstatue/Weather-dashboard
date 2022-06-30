@@ -3,6 +3,8 @@ var mainContainer = document.querySelector("#main-container");
 var searchContainer = document.querySelector("#search-container");
 var weatherContainer = document.querySelector("#weather-container");
 
+var history = [];
+
 // creating initial HTML elements for search column
 var searchBox = document.createElement("nav");
 searchBox.className = "panel is-info";
@@ -22,29 +24,54 @@ inputTextEl.className = "control has-icons-left";
 inputTextEl.innerHTML = "<form id ='input-form'><input class='input' id='cityname' type='text' placeholder='Search city name'> <span class ='icon is-left'><i class='fas fa-search' aria-hidden='true'></i></span></form>"
 formContainer.appendChild(inputTextEl);
 
+var buttonContainer = document.createElement("div")
+buttonContainer.className = "block";
+searchBox.appendChild(buttonContainer);
+
 var inputForm = document.querySelector("#cityname")
 
 // function to convert unix time to a date
 var convertDate = function(unixInput) {
 
-    var milliseconds = unixInput * 1000;
+  var milliseconds = unixInput * 1000;
 
-    var dateObject = new Date(milliseconds);
+  var dateObject = new Date(milliseconds);
 
-    var parseDateObject = dateObject.toLocaleDateString();
+  var parseDateObject = dateObject.toLocaleDateString();
 
-    return parseDateObject;
+  return parseDateObject;
+  
 }
 
 // function to remove all parents children
 var removeChildren = function (parent) {
 
-    while(parent.firstChild) {
+  while(parent.firstChild) {
   
-      parent.removeChild(parent.firstChild);
+    parent.removeChild(parent.firstChild);
   
-    }
+  }
+
 }  
+
+// function to create history buttons
+var createButtons = function (city, lon, lat) {
+
+  if(buttonContainer.childNodes.length > 3) {
+
+    buttonContainer.removeChild(buttonContainer.firstChild);
+
+  }
+
+  var newButton = document.createElement("button");
+  newButton.classList.add('button', 'is-info', 'is-fullwidth')
+  newButton.setAttribute('data-lon', lon);
+  newButton.setAttribute('data-lat', lat);
+  newButton.innerText = city;
+
+  buttonContainer.appendChild(newButton);
+
+}
 
 // function to create daily forecast cards
 var createForecasts = function(weather, box) {
@@ -167,6 +194,7 @@ var getWeatherdata = function(lat, lon, cityName) {
           var futureWeatherObject = data.daily;
 
           displayWeatherElements(currentWeatherObject, futureWeatherObject);
+          createButtons(cityName, lon, lat);
 
         });
       } else {
@@ -240,3 +268,18 @@ searchContainer.addEventListener("submit", function(event) {
 
 });
 
+// delegate click events to history buttons
+searchContainer.addEventListener("click", function(event) {
+    
+  if(event.target.matches(".button")) {
+    
+    var cityName = event.target.textContent;
+    var cityLat = event.target.getAttribute('data-lat');
+    var cityLon = event.target.getAttribute('data-lon');
+    console.log(cityLat);
+    
+    getWeatherdata(cityLat, cityLon, cityName);
+
+  }
+
+})
