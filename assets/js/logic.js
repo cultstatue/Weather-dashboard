@@ -3,8 +3,6 @@ var mainContainer = document.querySelector("#main-container");
 var searchContainer = document.querySelector("#search-container");
 var weatherContainer = document.querySelector("#weather-container");
 
-var history = [];
-
 // creating initial HTML elements for search column
 var searchBox = document.createElement("nav");
 searchBox.className = "panel is-info";
@@ -57,7 +55,7 @@ var removeChildren = function (parent) {
 // function to create history buttons
 var createButtons = function (city, lon, lat) {
 
-  if(buttonContainer.childNodes.length > 3) {
+  if(buttonContainer.childNodes.length > 9) {
 
     buttonContainer.removeChild(buttonContainer.firstChild);
 
