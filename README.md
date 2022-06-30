@@ -12,7 +12,8 @@
 
 ## Website
 https://cultstatue.github.io/Weather-dashboard/
-![_Users_maddiedoutt_Desktop_m6-challenge_index html](https://user-images.githubusercontent.com/105083634/176580076-da233a71-7df0-472f-a25d-3a884c7310c8.png)
+![cultstatue github io_Weather-dashboard_](https://user-images.githubusercontent.com/105083634/176581491-d5f5da89-b6f3-48a8-9a6b-d7ecd9a6cdf5.png)
+
 
 ## Contribution
 Maddie Doutt / cultstatue
