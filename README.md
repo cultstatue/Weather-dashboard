@@ -11,7 +11,8 @@
 * Openweather API
 
 ## Website
-
+https://cultstatue.github.io/Weather-dashboard/
+![_Users_maddiedoutt_Desktop_m6-challenge_index html](https://user-images.githubusercontent.com/105083634/176580076-da233a71-7df0-472f-a25d-3a884c7310c8.png)
 
 ## Contribution
 Maddie Doutt / cultstatue
