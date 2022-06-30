@@ -1,0 +1,45 @@
+header {
+
+    padding: 20px 35px;
+    text-align: center;
+
+}
+
+.main-container {
+
+    margin-top: 20px;
+}
+
+.search-container {
+
+    margin: 10px;
+
+}
+
+.weather-container {
+
+    margin: 10px;
+
+}
+
+.block {
+
+    padding: 10px;
+}
+
+.card {
+
+    margin: .2vh;
+    padding: 6px;
+}
+.button {
+
+    margin: 3px;
+    
+}
+
+footer {
+
+    padding: 15px;
+
+}
