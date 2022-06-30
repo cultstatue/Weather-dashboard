@@ -99,7 +99,7 @@ var createForecasts = function(weather, box) {
         newCardWeatherContent.className = "content";
         newCardWeatherContent.innerHTML = 
         "<figure class='image is-center image is-64x64'>" + 
-        "<img src='http://openweathermap.org/img/wn/" + weather[i].weather[0].icon + "@2x.png' /></figure>" + 
+        "<img src='https://openweathermap.org/img/wn/" + weather[i].weather[0].icon + "@2x.png' /></figure>" + 
         "<br /><b>Temperature:</b> " + weather[i].temp.day + "° F" + 
         "<br /><b>Wind Speed:</b> " + weather[i].wind_speed + " MPH" +
         "<br /><b>Humidity:</b> " + weather[i].humidity + " %";
@@ -126,7 +126,7 @@ var displayWeatherElements = function(currentWeather, futureWeather) {
     weatherContainer.appendChild(weatherBoxEl);
 
     var cityName = document.createElement("p"); // need to add date here too
-    cityName.innerHTML = "<img src='http://openweathermap.org/img/wn/" + currentWeather.icon + "@2x.png' width='35' height='30'/> " + currentWeather.name + " (" + convertDate(currentWeather.date) + ")";
+    cityName.innerHTML = "<img src='https://openweathermap.org/img/wn/" + currentWeather.icon + "@2x.png' width='35' height='30'/> " + currentWeather.name + " (" + convertDate(currentWeather.date) + ")";
     cityName.classList.add('panel-heading')
     weatherBoxEl.appendChild(cityName);
 
@@ -211,7 +211,7 @@ var getWeatherdata = function(lat, lon, cityName) {
 // function to get location data
 var getLocationData = function(cityName) {
 
-    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=f36d17786468fcf6dab864e03af92392";  fetch(apiUrl)
+    var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=f36d17786468fcf6dab864e03af92392";  fetch(apiUrl)
    
     fetch(apiUrl)
     .then(function(response) {
